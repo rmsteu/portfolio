@@ -1,22 +1,22 @@
-import React, {useRef} from 'react'
-import {useGSAP} from "@gsap/react";
-import gsap from "gsap";
-import {Tooltip} from "react-tooltip";
+import React, {useRef} from "react"
+import {useGSAP} from "@gsap/react"
+import gsap from "gsap"
+import {Tooltip} from "react-tooltip"
 
 
-import {dockApps} from "#constants/index.js";
-import useWindowStore from "#store/window.js";
+import {dockApps} from "#constants/index.js"
+import useWindowStore from "#store/window.js"
 
 
 const Dock = () => {
-    const {openWindow, closeWindow, windows} = useWindowStore();
+    const {openWindow, closeWindow, windows} = useWindowStore()
     const dockRef = useRef(null)
 
     useGSAP(() => {
         const dock = dockRef.current
         if (!dock) return
 
-        const icons = dock.querySelectorAll('.dock-icon')
+        const icons = dock.querySelectorAll(".dock-icon")
 
         const animateIcons = (mouseX) => {
             const {left} = dock.getBoundingClientRect()
@@ -57,7 +57,7 @@ const Dock = () => {
             dock.removeEventListener("mousemove", handleMouseMove)
             dock.removeEventListener("mouseleave", resetIcons)
 
-        };
+        }
     }, [])
 
     const toggleApp = (app) => {
@@ -67,6 +67,7 @@ const Dock = () => {
 
         if (!window) {
             console.error(`Window not found for app: ${app.id}`)
+            return
         }
 
         if (window.isOpen) {
@@ -84,7 +85,7 @@ const Dock = () => {
                         type="button"
                         className="dock-icon"
                         aria-label={name}
-                        data-tooltip-id='dock-tooltip'
+                        data-tooltip-id="dock-tooltip"
                         data-tooltip-content={name}
                         data-tooltip-delay-show={150}
                         disabled={!canOpen}
@@ -92,7 +93,7 @@ const Dock = () => {
                         <img src={`/images/${icon}`}  // Fixed!
                              alt={name}
                              loading="lazy"
-                             className={canOpen ? '' : "opacity-60"}/>
+                             className={canOpen ? "" : "opacity-60"}/>
                     </button>
                 </div>
             ))}
